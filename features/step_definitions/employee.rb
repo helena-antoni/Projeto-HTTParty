@@ -40,7 +40,9 @@ end
 
     # cenario_tres
     Dado('que o usuario atualize as informacoes do funcionario') do
-        @put_url = 'https://jsonplaceholder.typicode.com/posts/10'
+        @get_employee = HTTParty.get('https://jsonplaceholder.typicode.com/posts/', :headers => {'Content-Type': 'application/json'})
+        puts @get_employee[0]['id']
+        @put_url = 'https://jsonplaceholder.typicode.com/posts/' + @get_employee[0]['id'].to_s
     end
 
     Quando('ele enviar as novas informacoes') do
@@ -59,5 +61,5 @@ end
         expect(@update_employee['title']).to eq('titulo atualizado')
         expect(@update_employee['body']).to eq('corpo atualizado')
         expect(@update_employee['userId']).to eq(1)
-        expect(@update_employee['id']).to eq(10)
+        expect(@update_employee['id']).to eq(1)
     end
