@@ -63,3 +63,22 @@ end
         expect(@update_employee['userId']).to eq(1)
         expect(@update_employee['id']).to eq(1)
     end
+
+    #cenario_quatro
+    Dado('que o usuario delete um cadastro de funcionario')  do
+       @get_employee = HTTParty.get('https://jsonplaceholder.typicode.com/posts/', :headers => {'Content-Type': 'application/json'})
+       @delete_url = 'https://jsonplaceholder.typicode.com/posts/' + @get_employee[1]['id'].to_s
+ 
+    end
+
+    Quando('ele enviar a identificacao unica') do
+        @delete_employee = HTTParty.delete(@delete_url, :headers => {'Content-Type': 'application/json'})
+        puts @delete_employee
+    end
+
+    Entao('o cadastro do funcionario sera removido') do
+        expect(@delete_employee.code).to eq(200) 
+        expect(@delete_employee.message).to eq('OK') 
+        expect(@delete_employee).to be_empty
+
+    end
