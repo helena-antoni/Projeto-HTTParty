@@ -13,8 +13,7 @@ end
         expect(@list_employee.message).to eql 'OK'
     end
 
-    # --- Cenario 2 ---
-
+    #cenario_dois
     Dado('que o usuario cadastre um novo usuario') do
         @post_url = 'https://jsonplaceholder.typicode.com/posts'
         
@@ -36,9 +35,29 @@ end
         puts @create_employee.message
         puts @create_employee["userId"]
         puts @create_employee["id"]
-        # puts @create_employee.parsed_response['data']["employee_name"]
-        
-        #expect(@create_employee.code).to eql (201)
-        #expect(@create_employee.msg).to eql 'OK'
-        #expect(@create_employee['status']).to eql 'sucess'
+    
+    end
+
+    # cenario_tres
+    Dado('que o usuario atualize as informacoes do funcionario') do
+        @put_url = 'https://jsonplaceholder.typicode.com/posts/10'
+    end
+
+    Quando('ele enviar as novas informacoes') do
+    @update_employee = HTTParty.put(@put_url, :headers => {'Content-Type': 'application/json'}, body:{
+        "id": 1,
+        "title": "titulo atualizado",
+        "body": "corpo atualizado",
+        "userId": 1
+    }.to_json)
+    puts (@update_employee)
+    end
+
+    Entao('as informacoes do funcionario serao atualizadas') do
+        expect(@update_employee.code).to eq(200)
+        expect(@update_employee.message).to eq('OK')
+        expect(@update_employee['title']).to eq('titulo atualizado')
+        expect(@update_employee['body']).to eq('corpo atualizado')
+        expect(@update_employee['userId']).to eq(1)
+        expect(@update_employee['id']).to eq(10)
     end
