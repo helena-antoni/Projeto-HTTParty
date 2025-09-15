@@ -5,6 +5,7 @@ Funcionalidade: Pesquisar Funcionarios
     O usuário do sistema 
     Deseja poder consultar informações dos funcionários
 
+    @cenario_um
     Cenario: Buscar informações de Funcionarios
         Dado que o usuario consulte informacoes de funcionarios
         Quando ele realizar a pesquisa
